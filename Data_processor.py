@@ -71,28 +71,36 @@ def confusion_matrix(data, model, plot=False):
         plt.show()
 
 def get_metrics(data, model):
+    model2 = 'roBerta'
     df = pd.read_csv(f'Predictions/prediction_{data}_{model}.csv', sep='\t')
-    print(classification_report(df['True'], df['predictions']))
+    df1 = pd.read_csv(f'Predictions/prediction_{data}_{model2}.csv', sep='\t')
+    
+    df['Id'] = df1['Id']
+
+    df.to_csv(f'Predictions/prediction_{data}_{model}.csv')
+    # print(classification_report(df['True'], df['predictions']))
 
 def describe(data):
-    test = pd.read_csv(f'{data}_data/testData.csv', sep='\t')
-    train = pd.read_csv(f'{data}_data/trainData.csv', sep='\t')
+    test = pd.read_csv(f'Predictions/{data}_data/testData.csv', sep='\t')
+    train = pd.read_csv(f'Predictions/{data}_data/trainData.csv', sep='\t')
 
     df = pd.concat([test,train])
 
     print(df.describe())
     print(df['Label'].value_counts())
+
+
 if __name__ == "__main__":
 
-    model = 'HateExplain'
-    data = 'Bert'
+    model = 'Bert'
+    data = 'HateExplain'
 
     # test_train_split()
 
     # confusion_matrix(data, model)
 
-    # get_metrics(data, model)
+    get_metrics(data, model)
 
     # make_scatter_plot(data, model)
 
-    describe(model)
+    # describe(model)
