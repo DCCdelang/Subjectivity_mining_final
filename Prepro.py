@@ -8,8 +8,9 @@ import seaborn as sns
 
 def test_train_split():
     ''' 
-    Take a sample of 4000 from hatexplain data set
-    and split it into test and train dataset
+    Take a sample of 4000 from the total 20000 of
+    hatexplain data set and split it into test and
+    train dataset
     '''
     df = pd.read_csv('HateExplain\hateexplain_2_VUA.csv', sep='\t')
 
@@ -21,7 +22,7 @@ def test_train_split():
     train = df.tail(n=3600)
 
     train.to_csv('trainData.csv', sep='\t')
-
+    
     test.to_csv('testData.csv', sep='\t')
 
 
