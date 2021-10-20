@@ -74,7 +74,14 @@ def get_metrics(data, model):
     df = pd.read_csv(f'Predictions/prediction_{data}_{model}.csv', sep='\t')
     print(classification_report(df['True'], df['predictions']))
 
+def describe(data):
+    test = pd.read_csv(f'{data}_data/testData.csv', sep='\t')
+    train = pd.read_csv(f'{data}_data/trainData.csv', sep='\t')
 
+    df = pd.concat([test,train])
+
+    print(df.describe())
+    print(df['Label'].value_counts())
 if __name__ == "__main__":
 
     model = 'HateExplain'
@@ -88,4 +95,4 @@ if __name__ == "__main__":
 
     # make_scatter_plot(data, model)
 
-
+    describe(model)
