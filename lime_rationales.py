@@ -59,18 +59,7 @@ def similarity_IOU(id):
  
     list1 = list(df1[df1.Ratio > 0.5].index)
     list2 = list(df2[:len(list1)].Word)
-    # print(df1,df2)
 
-    # print(list1,list2)
-    # print(len(list1),len(list2))
-    # print(IOU(list1,list2))
-    # exit()
-
-    # NOG NIET HELEMAAL GOED WANT EIGENLIJK IS DF2 EEN SET EN GEEN FULL LIST ?????
-    # if len(list1) > len(list2):
-    #     list1 = list1[:len(list2)]
-    # elif len(list1) < len(list2):
-    #     list2 = list2[:len(list1)]
     return IOU(list1,list2)
 
 sim_list = []
@@ -84,29 +73,5 @@ df_sim = pd.DataFrame({"Id": prediction_hate_ids, "Similarity":sim_list})
 
 # IOU 
 print("Average IOU similarity "+model, round(df_sim.Similarity.mean(),3))
-# TP = df_sim.Similarity[df_sim.Similarity > 0.5].shape[0]
-# FP = df_sim.Similarity[df_sim.Similarity < 0.5].shape[0]
-# print(TP,FP)
-
-# FP = df_sim.Similarity.loc[(df_sim.Similarity < 0.5) & (df_sim.Similarity != 0) ].shape[0]
-# FN = df_sim.Similarity[df_sim.Similarity == 0].shape[0]
-# FN = lime_data_filtered_no.shape[0]
-# FN = 0
-# precision = TP / (TP+FP)
-# recall = TP / (TP+FN)
-# IOU_F1 = 2 * ((precision * recall)/(precision + recall))
-# print("Average IOU similarity "+model, round(IOU_F1,3))
 
 # df_sim.to_csv("Similarity/"+model+"_hate_sim_IOU.csv")
-
-"""Check top classified words per model"""
-
-# df_lime_values = pd.read_csv("Lime Values/Values_HateExplain_RoBerta.csv")
-
-# df_grouped = df_lime_values.groupby("Word")\
-#     .agg({"Value": ['size', 'mean']}) \
-#     .sort_values(by=("Value","mean"),ascending=True)\
-#     .reset_index()
-
-
-# print(df_grouped.head(10))

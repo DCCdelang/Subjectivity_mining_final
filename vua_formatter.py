@@ -1,6 +1,5 @@
 """
-This files functions as a VUA formatter tool for the original HateExplain and 
-ETHOS hate-speech datasets.
+This files functions as a VUA formatter tool for the original HateExplain.
 """
 import pandas as pd
 import json
@@ -31,7 +30,6 @@ def get_hate_rationales_words():
         label_list=[]
         for i in range(1,4):
             temp['annotatorid'+str(i)]=data[key]['annotators'][i-1]['annotator_id']
-#             temp['explain'+str(i)]=data[key]['annotators'][i-1]['rationales']
             temp['target'+str(i)]=data[key]['annotators'][i-1]['target']
             temp['label'+str(i)]=data[key]['annotators'][i-1]['label']
             label_list.append(temp['label'+str(i)])
@@ -42,14 +40,7 @@ def get_hate_rationales_words():
             temp['text']=list(data[key]['post_tokens'])
 
             if len(temp["rationales"])>0:
-                # it = iter(temp["rationales"])
-                # the_len = len(next(it))
-                # if all(len(l) == the_len for l in it):
                 summed_list = sum(map(np.array, temp["rationales"]))/len(temp["rationales"])
-                # else:
-                #     print(Id,temp["rationales"])
-                #     continue
-
             else:
                 summed_list = np.zeros(len(temp["text"]))
             
@@ -79,13 +70,7 @@ def get_rationales_words():
         temp['text']=list(data[key]['post_tokens'])
 
         if len(temp["rationales"])>0:
-            # it = iter(temp["rationales"])
-            # the_len = len(next(it))
-            # if all(len(l) == the_len for l in it):
             summed_list = sum(map(np.array, temp["rationales"]))/len(temp["rationales"])
-            # else:
-            #     print(Id,temp["rationales"])
-            #     continue
 
         else:
             summed_list = np.zeros(len(temp["text"]))
@@ -95,9 +80,7 @@ def get_rationales_words():
         df_temp.insert(0, 'Id', Id)
 
         ration_data = pd.concat([ration_data,df_temp])
-        # print(count)
-        # if count > 100:
-        #     break
+
     ration_data.to_csv("HateExplain_data\hateexplain_rationales.csv",index=False,sep="\t")
     print(ration_data.head())
     print(ration_data.info())
@@ -152,8 +135,6 @@ def get_annotated_data(classes):
 
 vua_hateexplain = False
 if vua_hateexplain == True:
-    # data_he = get_annotated_data("else")
-
     # data_he.to_csv("Pipeline\ma-course-subjectivity-mining\pynlp\data\HateExplain\hateexplain_2.csv")
 
     data_full = pd.read_csv("HateExplain_data\hateexplain_2.csv")
